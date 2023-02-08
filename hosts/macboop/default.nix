@@ -1,26 +1,24 @@
 # hosts/macboop/default.nix
 { pkgs, ... }:
 {
+  imports = [
+    ../common-macos.nix
+    ../../users/cbzehner
+  ];
 
-  # Make sure the nix daemon always runs
-  services.nix-daemon.enable = true;
-  # Installs a version of nix, that dosen't need "experimental-features = nix-command flakes" in /etc/nix/nix.conf
-  services.nix-daemon.package = pkgs.nixFlakes;
+  networking = {
+    computerName = "MacBoop Pro";
+    hostName = "macboop";
+  };
   
-  # if you use zsh (the default on new macOS installations),
-  # you'll need to enable this so nix-darwin creates a zshrc sourcing needed environment changes
-  programs.zsh.enable = true;
-  # bash is enabled by default
+  security.pam.enableSudoTouchIdAuth = true;
 
-  homebrew = {
-    enable = true;
-    # updates homebrew packages on activation,
-    # can make darwin-rebuild much slower (otherwise i'd forget to do it ever though)
-    autoUpdate = true;
-    casks = [
-      "amethyst"
+  # Settings available to all users
+  environment = {
+    # Packages installed in system profile. 
+    systemPackages = [
+      # pkgs.helix
     ];
   };
 
-  system.defaults.dock.autohide = true;
 }
