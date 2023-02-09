@@ -1,7 +1,7 @@
 # users/cbzehner/default.nix
-{ pkgs, inputs, ... }:
+{ pkgs, nixpkgs-unstable, nix-colors, ... }:
 let
-  pkgsUnstable = import inputs.nixpkgs-unstable {
+  pkgsUnstable = import nixpkgs-unstable {
     system = pkgs.system;
     config.allowunfree = true;
   };
@@ -18,7 +18,10 @@ in {
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.users.cbzehner = {
-    imports = [./home.nix];
+    imports = [
+      nix-colors.homeManagerModule
+      ./home.nix
+    ];
 
     # Let Home Manager install and manage itself.
     programs.home-manager.enable = true;
@@ -26,6 +29,8 @@ in {
     # Home Manager needs a bit of information about you and the
     # paths it should manage.
     home.username = "cbzehner";
+
+    colorScheme = nix-colors.colorSchemes.eighties;
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
