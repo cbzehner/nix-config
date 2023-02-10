@@ -1,7 +1,7 @@
-# users/cbzehner/programs/starship.nix
+# users/cbzehner/programs/zoxide.nix
 { ... }:
 {
-  programs.starship = {
+  programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
   };

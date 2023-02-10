@@ -1,3 +1,4 @@
+# users/cbzehner/programs/tealdeer.nix
 { ... }: 
 {  
   programs.tealdeer = {

@@ -6,6 +6,8 @@ let
     config.allowunfree = true;
   };
 in {
+  nixpkgs.config.allowUnfree = true;
+
   users = {
     users = {
       cbzehner = {

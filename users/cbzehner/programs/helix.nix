@@ -12,27 +12,30 @@ in {
     settings = {
       theme = "monokai_pro_spectrum";
       editor = {
-        cursorcolumn = true;
         auto-save = true;
-        line-number = "relative";
         color-modes = true;
-        whitespace.render = {
-          tabs = "all";
-        };
+        cursorcolumn = true;
+        line-number = "relative";
         indent-guides = {
           render = true;
           character = "╎"; # Some characters that work well: "▏", "┆", "┊", "⸽"
           skip-levels = 1;
+        };
+        lsp = {
+          display-messages = true;
+        };
+        whitespace.render = {
+          tabs = "all";
         };
         # soft-wrap.enable = true; # TODO: Merged in https://github.com/helix-editor/helix/pull/5420
       };
       keys = {
         normal = {
           space.e = ":reflow";
+          space.o.w = ":set soft-wrap.enable false";
           space.q = ":q";
           space.w = ":w";
           space.x = ":x";
-          space.o.w = ":set soft-wrap.enable false";
           Z = {
             d = "half_page_down";
             u = "half_page_up";
