@@ -6,7 +6,7 @@
     settings = {
       copy_command = "pbcopy";
       copy_on_select = false;
-    }
-    # TODO: Add a theme using nix-colors
-  }
+      # TODO: Add a theme using nix-colors
+    };
+  };
 }

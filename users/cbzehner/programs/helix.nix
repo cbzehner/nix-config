@@ -76,9 +76,14 @@ in {
     };
 
   # Language servers
-  # home.packages = with pkgs; [
-  #   nil
-  #   terraform-ls
-  # ];
+  home.packages = with pkgs; [
+    nodePackages.bash-language-server
+    haskell-language-server
+    nil
+    rust-analyzer
+    terraform-ls
+    nodePackages.typescript-language-server
+    nodePackages.yaml-language-server
+  ];
 }
 
