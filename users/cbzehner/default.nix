@@ -1,10 +1,13 @@
 # users/cbzehner/default.nix
-{ pkgs, nixpkgs-unstable, nix-colors, ... }:
+{ pkgs, nixpkgs-unstable, nix-colors, generate-github-keypair, ... }:
 let
   pkgsUnstable = import nixpkgs-unstable {
     system = pkgs.system;
     config.allowunfree = true;
   };
+  generateGitHubKeyPair = generate-github-keypair.packages.aarch64-darwin.generate-github-keypair;
+  # generateGitHubKeyPair = ../../scripts/generate-github-keypair/flake.nix;
+  # generateGitHubKeyPair' = pkgs.callPackage generateGitHubKeyPair {};
 in {
   nixpkgs.config.allowUnfree = true;
 
@@ -45,6 +48,7 @@ in {
     home.stateVersion = "22.11";
   
     home.packages = [
+        generateGitHubKeyPair
         # pkgs.heliocron
         pkgs.bandwhich
         pkgs.bat
