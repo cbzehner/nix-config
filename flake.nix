@@ -16,10 +16,11 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
       nix-colors.url = "github:misterio77/nix-colors";
+      generate-github-keypair.url = "path:./scripts/generate-github-keypair";
   };
   
   # add the inputs declared above to the argument attribute set
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, darwin, nix-colors }: 
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, darwin, nix-colors, generate-github-keypair }: 
     {
       # we want `nix-darwin` and not gnu hello, so the packages stuff can go
       darwinConfigurations."macboop" = darwin.lib.darwinSystem {
@@ -29,6 +30,7 @@
         specialArgs = {
           inherit nixpkgs-unstable; 
           inherit nix-colors;
+          inherit generate-github-keypair;
         };
         modules = [ 
           home-manager.darwinModules.home-manager
@@ -36,6 +38,7 @@
             home-manager.extraSpecialArgs = { 
               inherit nixpkgs-unstable; 
               inherit nix-colors;
+              inherit generate-github-keypair;
             };
           }
           ./hosts/macboop/default.nix

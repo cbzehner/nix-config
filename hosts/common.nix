@@ -1,6 +1,10 @@
 # hosts/common.nix
 { ... }:
 {
+  # imports = [
+    # ../scripts/generate-github-keypair/flake.nix
+  # ];
+
   nix = {
     gc.automatic = true; # Clean up unused packages to save disk space
     settings.sandbox = true;
