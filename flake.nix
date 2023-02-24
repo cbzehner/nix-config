@@ -16,11 +16,10 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
       nix-colors.url = "github:misterio77/nix-colors";
-      generate-github-keypair.url = "path:./scripts/generate-github-keypair";
   };
   
   # add the inputs declared above to the argument attribute set
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, darwin, nix-colors, generate-github-keypair }: 
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, darwin, nix-colors }: 
     {
       # we want `nix-darwin` and not gnu hello, so the packages stuff can go
       darwinConfigurations."macboop" = darwin.lib.darwinSystem {
@@ -30,7 +29,6 @@
         specialArgs = {
           inherit nixpkgs-unstable; 
           inherit nix-colors;
-          inherit generate-github-keypair;
         };
         modules = [ 
           home-manager.darwinModules.home-manager
@@ -38,21 +36,23 @@
             home-manager.extraSpecialArgs = { 
               inherit nixpkgs-unstable; 
               inherit nix-colors;
-              inherit generate-github-keypair;
             };
           }
           ./hosts/macboop/default.nix
         ]; # will be important later
       };
+
+      devShells.aarch64-darwin.default =
+        let pkgs = nixpkgs-unstable.legacyPackages.aarch64-darwin;
+        in pkgs.mkShellNoCC {
+          nativeBuildInputs = [
+            pkgs.nil       # nix lsp
+            pkgs.alejandra # nix code formatter
+          ];
+
+          shellHook = ''
+            echo "Successfully entered MacBoop Flake's dev shell environment"
+          '';
+      };
     };
-
-    # TODO: Make a dev shell which provides `pkgs.nil` the Nix LSP binary.
-    # devShells.default = mkShell {
-    #   buildInputs = [
-    #     pkgs.nil
-    #   ];
-
-    #   shellHook = ''
-    #   '';
-    # };
 }

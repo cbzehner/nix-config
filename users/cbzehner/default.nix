@@ -1,13 +1,15 @@
 # users/cbzehner/default.nix
-{ pkgs, nixpkgs-unstable, nix-colors, generate-github-keypair, ... }:
+{ pkgs, nixpkgs-unstable, nix-colors, ... }:
 let
   pkgsUnstable = import nixpkgs-unstable {
     system = pkgs.system;
     config.allowunfree = true;
   };
-  generateGitHubKeyPair = generate-github-keypair.packages.aarch64-darwin.generate-github-keypair;
-  # generateGitHubKeyPair = ../../scripts/generate-github-keypair/flake.nix;
-  # generateGitHubKeyPair' = pkgs.callPackage generateGitHubKeyPair {};
+  generateGitHubKeyPair = pkgs.writeShellApplication {
+    name = "generate-github-keypair";
+    runtimeInputs = with pkgs; [ cowsay ];
+    text = builtins.readFile ../../scripts/generate-github-keypair.sh;
+  };
 in {
   nixpkgs.config.allowUnfree = true;
 
